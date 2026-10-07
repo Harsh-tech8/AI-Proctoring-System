@@ -1,0 +1,56 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: proctor-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  gateway:
+    build:
+      context: .
+      dockerfile: services/gateway/Dockerfile
+    container_name: proctor-gateway
+    restart: unless-stopped
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      EVENT_STREAM: proctor:frames
+      ALERT_STREAM: proctor:alerts
+    ports:
+      - "8000:8000"
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  vision-worker:
+    build:
+      context: .
+      dockerfile: services/vision_worker/Dockerfile
+    container_name: proctor-vision-worker
+    restart: unless-stopped
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      EVENT_STREAM: proctor:frames
+      ALERT_STREAM: proctor:alerts
+      LOOK_AWAY_THRESHOLD: "0.72"
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  scoring-engine:
+    build:
+      context: .
+      dockerfile: services/scoring_engine/Dockerfile
+    container_name: proctor-scoring-engine
+    restart: unless-stopped
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      ALERT_STREAM: proctor:alerts
+    depends_on:
+      redis:
+        condition: service_healthy

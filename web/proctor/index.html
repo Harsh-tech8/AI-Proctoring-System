@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Proctoring - Dashboard</title>
+  <link rel="stylesheet" href="/proctor/style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Exam oversight</p>
+        <h1>Proctor Dashboard</h1>
+        <p class="muted">AI signals support human review; they are not proof of misconduct.</p>
+      </div>
+      <div class="toolbar">
+        <span id="updated" class="updated" aria-live="polite">Waiting for data</span>
+        <button id="refresh" class="refresh-btn" title="Refresh sessions now">Refresh</button>
+      </div>
+    </header>
+
+    <section class="overview" aria-label="Session overview">
+      <div class="metric"><span>All sessions</span><strong id="count-total">0</strong></div>
+      <div class="metric"><span>Active now</span><strong id="count-active">0</strong></div>
+      <div class="metric metric-review"><span>Needs review</span><strong id="count-review">0</strong></div>
+      <div class="metric"><span>Inactive</span><strong id="count-inactive">0</strong></div>
+    </section>
+
+    <div class="list-heading"><h2>Candidate sessions</h2><span id="connection" class="connection">Connecting</span></div>
+    <div id="sessions" class="sessions"></div>
+  </main>
+  <script src="/proctor/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Proctoring - Candidate</title>
+  <link rel="stylesheet" href="/candidate/style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Secure exam monitoring</p>
+        <h1>AI Proctored Exam</h1>
+      </div>
+      <div class="badge">Live AI monitor</div>
+    </header>
+
+    <section class="card hero-card">
+      <div class="video-wrap">
+        <video id="video" autoplay muted playsinline></video>
+        <canvas id="canvas" hidden></canvas>
+      </div>
+      <div class="controls">
+        <button id="start" class="primary">Start Proctoring</button>
+        <button id="stop" class="secondary" disabled>Stop</button>
+      </div>
+      <div id="status" class="status-pill" role="status">Not started</div>
+      <div id="session" class="session-tag">Session: waiting</div>
+    </section>
+
+    <section class="card info-card">
+      <h2>Candidate notice</h2>
+      <p>This demo detects configured visual signals like gaze drift, eye visibility, and tab switching. AI signals are recommendations for review, not automatic proof of cheating.</p>
+    </section>
+  </main>
+  <script src="/candidate/app.js"></script>
+</body>
+</html>
